@@ -15,24 +15,24 @@ interface authData {
 }
 
 const initialState: authData = {
-  loginData: null,
+    loginData: localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')!) : null
 }
 
 export const authSlice = createSlice({
-    name: 'auth',
+    name: 'userData',
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<null>) => {            
+        setUserData: (state, action: PayloadAction<null>) => {            
             state.loginData = action.payload
-        },
-        // logout: (state) => {
-        //     state.loginData = null
-        //     localStorage.removeItem('token') // Optional: remove token on logout
-        //     toast.success('Logged out successfully')
-        // }
+        }, 
+        logout: (state) => {
+            state.loginData = null;
+            localStorage.removeItem('token')
+            localStorage.removeItem('userData'); // Remove user data from localStorage
+        }
     }
 })
 
-export const { login } = authSlice.actions
+export const { setUserData, logout } = authSlice.actions
 
 export default authSlice.reducer

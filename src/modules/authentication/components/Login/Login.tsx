@@ -14,8 +14,10 @@ import Button from '@mui/material/Button';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useForm } from 'react-hook-form';
 import { EmailValidation } from '../../../../services/Validations'
+import { useLoginMutation } from '../../../../redux/api/authSlice'
+import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
-import { loginUser } from "../../../../redux/api/authApi";
+import { setUserData } from '../../../../redux/slice/userSlice'
 
 interface loginData {
   email: string,
@@ -24,15 +26,36 @@ interface loginData {
 
 export default function Login() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const {
     register,
     formState: { errors, isSubmitting },
     handleSubmit
   } = useForm();
 
-  const handelLogin =  (data: loginData) => {
-    dispatch(loginUser(data, navigate));    
+  const dispatch = useDispatch()
+
+  const [login] = useLoginMutation()
+
+  const handelLogin =  async (data: loginData) => {
+    try {
+      // Trigger the login mutation and wait for the response
+      const res = await login(data).unwrap(); 
+      console.log(res);
+
+      const token = res?.data?.accessToken
+      localStorage.setItem('token', token)
+
+      const userData = JSON.stringify(res?.data?.profile)
+      localStorage.setItem('userData', userData)
+
+      dispatch(setUserData(res?.data?.profile))
+
+      toast.success(res?.message)
+      navigate('/dashboard')
+
+    } catch (error: any) {
+      toast.error(error?.data?.message)      
+    }
   }
 
   return (
@@ -70,7 +93,8 @@ export default function Login() {
                 </Box>
                 {errors.password && <p className='text-red-600 mt-1'>{String(errors.password.message)}</p>}
                 <Box className="mt-8 flex justify-between">
-                  <Button type='submit' variant="contained" sx={{backgroundColor: '#F5F5F5', color: '#000'}}>
+                  <Button type='submit' variant="contained" sx={{backgroundColor: '#F5F5F5', color: '#000'}} disabled={isSubmitting}>
+                    {isSubmitting && <span className="spinner-border spinner-border-md mr-1 mx-1"></span>}
                     Sign In <CheckCircleIcon sx={{marginLeft: '5px'}}/>
                   </Button>
                   <Link to={'/forget-password'} className='text-white'>Forgot password? <span style={{color:'#C5D86D'}}>click here</span></Link>

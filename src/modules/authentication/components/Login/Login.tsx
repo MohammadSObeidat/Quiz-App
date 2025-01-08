@@ -61,7 +61,7 @@ export default function Login() {
   return (
     <Box component="section" sx={{backgroundColor: '#0D1321'}}>
         <Container maxWidth="lg" sx={{ minHeight: '100vh', display: 'flex',justifyContent: 'center', alignItems: 'center'}}>
-          <Grid container spacing={2} sx={{width: '100%'}}>
+          <Grid container spacing={2} sx={{width: '100%', padding: '20px 0'}}>
             <Grid size={{lg: 6, md: 6, sm: 7, xs: 12}}>
               <img className='my-12' src={logo} alt="" />
               <Typography variant='body1' sx={{fontFamily: '"Nunito", serif', fontWeight: 700, fontSize: '25px', color: '#C5D86D'}}>Continue your learning journey with QuizWiz!</Typography>

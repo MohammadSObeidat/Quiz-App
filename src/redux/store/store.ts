@@ -4,7 +4,7 @@ import { authSlice } from '../api/authSlice'
 
 export const store = configureStore({
   reducer: {
-    userData: userDataReducer,
+    user: userDataReducer,
     [authSlice.reducerPath] : authSlice.reducer
   },
 

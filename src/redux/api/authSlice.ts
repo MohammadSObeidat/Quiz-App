@@ -10,8 +10,29 @@ export const authSlice = createApi({
                 method: 'POST',
                 body: data
             })
+        }),
+        createUser: builder.mutation<any, {first_name: string, last_name: string, email: string, role: string, password: string}>({
+            query: (data) => ({
+                url: `/api/auth/register`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        forgotPassword: builder.mutation<any, {email: string}>({
+            query: (data) => ({
+                url: `/api/auth/forgot-password`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        resetPassword: builder.mutation<any, {email: string, otp: string, password: string}>({
+            query: (data) => ({
+                url: `/api/auth/reset-password`,
+                method: 'POST',
+                body: data
+            })
         })
     }),
 })
 
-export const {useLoginMutation} = authSlice
+export const {useLoginMutation, useCreateUserMutation, useForgotPasswordMutation, useResetPasswordMutation} = authSlice

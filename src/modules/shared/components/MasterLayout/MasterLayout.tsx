@@ -1,19 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '../../../../redux/store/store'
-import { logout } from '../../../../redux/slice/userSlice'
+import { removeUserData } from '../../../../redux/slice/userSlice'
 
 export default function MasterLayout() {
-  const {loginData} = useSelector((state: RootState) => state.userData)
+  const {loginData} = useSelector((state: RootState) => state.user)
 
   const dispatch = useDispatch()
 
-  const logoutt = () => {
-    dispatch(logout())
+  const logout = () => {
+    dispatch(removeUserData())
+    localStorage.removeItem('token')
+    localStorage.removeItem('userData');
   }
   return (
     <div>
       <h1>{loginData?.first_name}</h1>
-      <button onClick={logoutt}>log out</button>
+      <button onClick={logout}>log out</button>
     </div>
   )
 }

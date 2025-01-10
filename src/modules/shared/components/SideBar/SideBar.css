@@ -1,0 +1,22 @@
+.sidebar-container {
+    position: sticky;
+    left: 0;
+    top: 0;
+}
+.ps-sidebar-container{
+    height: calc(100vh - 64px) !important;
+}
+.sidebar-container .ps-sidebar-container {
+    background-color: #FFFFFF;
+    border-right: 1px solid #00000033;
+}
+.sidebar-container .ps-sidebar-container .ps-menuitem-root {
+    border-bottom: 1px solid #00000033;
+}
+.sidebar-container .ps-sidebar-container .ps-menu-button {
+    height: 80px;
+}
+.sidebar-container .ps-menuitem-root.ps-active {
+    background-color: #FFEDDF; 
+    color: #000;
+}

@@ -9,6 +9,8 @@ import NotFound from './modules/shared/components/NotFound/NotFound'
 import MasterLayout from './modules/shared/components/MasterLayout/MasterLayout'
 import Dashboard from './modules/dashboard/components/Dashboard/Dashboard'
 import { ToastContainer } from 'react-toastify';
+import Groups from './modules/groups/components/Groups/Groups'
+import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute'
 
 function App() {
   const router = createBrowserRouter([
@@ -25,11 +27,14 @@ function App() {
       ]
     },
     {
-      path: 'dashboard',
-      element: <MasterLayout/>,
+      path: '/',
+      element:  <ProtectedRoute>
+                  <MasterLayout/> 
+                </ProtectedRoute>,
       children: [
         {index: true, element: <Dashboard/>},
         {path: 'dashboard', element: <Dashboard/>},
+        {path: 'groups', element: <Groups/>},
       ]
     }
   ])

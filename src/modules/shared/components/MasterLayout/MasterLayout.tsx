@@ -20,15 +20,7 @@ export default function MasterLayout() {
       navigate('/login')
     }
   }, [])
-  // const {loginData} = useSelector((state: RootState) => state.user)
-
-  // const dispatch = useDispatch()
-
-  // const logout = () => {
-  //   dispatch(removeUserData())
-  //   localStorage.removeItem('token')
-  //   localStorage.removeItem('userData');
-  // }
+  
   return (
     isAuth && <Box component="section">
                 <Box className="navbar">

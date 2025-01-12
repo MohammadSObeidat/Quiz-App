@@ -24,7 +24,7 @@ export default function Dashboard() {
   return (
     <Box component="section" sx={{padding: '30px'}}>
        <Grid container spacing={4}>
-        <Grid size={6}>
+        <Grid size={{lg: 6, md: 6, sm:6, xs: 12}}>
           <Box className="quizzes" sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '15px'}}>
             <Box className="flex items-center justify-between pb-4">
               <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '20px'}}>Upcoming 5 quizzes</Typography>
@@ -105,7 +105,7 @@ export default function Dashboard() {
           </Box>
         </Grid>
 
-        <Grid size={6}>
+        <Grid size={{lg: 6, md: 6, sm:6, xs: 12}}>
           <Box className="students" sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '15px'}}>
             <Box className="flex items-center justify-between pb-4">
               <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '20px'}}>Top 5 Students</Typography>

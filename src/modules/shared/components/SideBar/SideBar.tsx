@@ -19,6 +19,10 @@ export default function SideBar() {
                   active={activeItem === 'dashboard'}  // Conditional active state
                   onClick={() => setActiveItem('dashboard')}  // Set active item on click
                 > Dashboard </MenuItem>
+                <MenuItem icon={<img src={groupImg} alt="" />} component={<Link to="/students" />}
+                  active={activeItem === 'students'}  // Conditional active state
+                  onClick={() => setActiveItem('students')}  // Set active item on click
+                > Students </MenuItem>
                 <MenuItem icon={<img src={groupImg} alt="" />} component={<Link to="/groups" />}
                   active={activeItem === 'groups'}  // Conditional active state
                   onClick={() => setActiveItem('groups')}  // Set active item on click

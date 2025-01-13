@@ -14,11 +14,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+// import TextField from '@mui/material/TextField';
+// import MenuItem from '@mui/material/MenuItem';
+// import InputLabel from '@mui/material/InputLabel';
+// import FormControl from '@mui/material/FormControl';
+// import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { toast } from 'react-toastify';
 import removeImg from '../../../../assets/images/images-removebg-preview.png'
 
@@ -52,16 +52,15 @@ interface student {
  last_name: string
 }
 
-interface dataGroup {
-  _id: string,
-  name: string,
-  students: student[],
-}
+// interface dataGroup {
+//   _id: string,
+//   name: string,
+//   students: student[],
+// }
 
 export default function Groups() {
   const [id, setId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const {
     register,
@@ -69,24 +68,15 @@ export default function Groups() {
     formState: { errors },
     reset,
     setValue,
-    watch
   } = useForm();
 
-  const handleClickOpen = (id: string) => {
+  const handleClickOpen = (id?: string) => {
     setId(id)
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const handleClickOpenUpdate = (id: string) => {
-  //   setId(id)
-  //   setOpenUpdate(true);
-  // };
-  // const handleCloseUpdate = () => {
-  //   setOpenUpdate(false);
-  // };
 
   const handleClickOpenDelete = (id: string) => {
     setId(id)
@@ -99,34 +89,43 @@ export default function Groups() {
 
   const [students, setStudents] = useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setStudents(event.target.value as string[]);
   };
 
   const {data: dataGroups, isLoading: isLoadingGroups} = useGetGroupsQuery()
   const {data: dataStudents, isLoading: isLoadingStudents} = useGetStudentsQuery()
-  const {data: dataGroup, isLoading: isLoadingGroup} = useGetGroupQuery()
+  const {data: dataGroup, isLoading: isLoadingGroup} = useGetGroupQuery(id)
+
   const [createGroup] = useCreateGroupMutation()
   const [removeGroup] = useRemoveGroupMutation()
   const [updateGroup] = useUpdateGroupMutation()
 
-  const addGroup = async (data: groupsData) => {  
+  // create and update group 
+  const handleGroup = async (data: groupsData) => {
     try {
-      const res = await createGroup(data).unwrap(); 
+      let res;
+      if (id) {
+        res = await updateGroup({ id, data }).unwrap(); // Update existing group
+      } else {
+        res = await createGroup(data).unwrap(); // Create new group
+      }
       console.log(res);
-      toast.success(res.message)
-      handleClose()
+      toast.success(res.message);
+      handleClose();
+      
       // Reset the form fields
       reset({
         name: '',
-        students: []  // Reset the students array as well
+        students: [], // Reset the students array as well
       });
     } catch (error: any) {
-      toast.error(error?.data?.message) 
+      toast.error(error?.data?.message || "An error occurred");
     }
   }
 
-  const deleteGroupe = async () => {
+  // delete group
+  const deleteGroup = async () => {
     try {
       const res = await removeGroup(id).unwrap();
       toast.success(res.message)
@@ -136,20 +135,26 @@ export default function Groups() {
       toast.error(error?.data?.message) 
     }
   }
-  
+
   useEffect(() => {
     if (id) {
       // Fetch the group details if id exists
-      const groupToEdit = dataGroups.find((group: dataGroup) => group._id === id);
-      if (groupToEdit) {
-        setValue('name', groupToEdit.name);
-        setValue('students', groupToEdit.students);
-      } else {
+      if (dataGroup && !isLoadingGroup) {
+        console.log({ dataGroup });
+        setValue("name", dataGroup.name);
+        setValue("students", dataGroup.students);
+      } else if (!isLoadingGroup) {
+        // Reset only if data is not loading and no data found
         reset({
-          name: '',
-          students: []  // Reset the students array as well
+          name: "",
+          students: [], // Reset the students array as well
         });
       }
+    } else {
+      reset({
+        name: "",
+        students: [], // Reset the students array as well
+      });
     }
   }, [id]);
   
@@ -165,7 +170,7 @@ export default function Groups() {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <form onSubmit={handleSubmit(addGroup)}>
+        <form onSubmit={handleSubmit(handleGroup)}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Set up a new Group
         </DialogTitle>
@@ -209,13 +214,35 @@ export default function Groups() {
               </Box>
               <Box>
                 <Box className='select-student'>
-                  <select {...register('students', {
+                  {/* <select {...register('students', {
                     required: 'Students is required'
                   })} onChange={(event) => handleChange(event)} multiple>
                     <option value="" style={{backgroundColor: '#FFEDDF'}}>List Students</option>
                     {dataStudents.map((student: dataStudent) => {
                       return <option value={student._id}>{student.first_name} {student.last_name}</option>
                     })}
+                  </select> */}
+
+                  <select
+                    {...register("students", {
+                      required: "Students is required",
+                    })}
+                    onChange={(event) => handleChange(event)}
+                    multiple
+                  >
+                    <option value="" style={{ backgroundColor: "#FFEDDF" }}>
+                      List Students
+                    </option>
+                    {/* The options are populated by combining two arrays: [...dataStudents, ...(dataGroup?.students || [])]*/}
+                    {[...dataStudents, ...(dataGroup?.students || [])].map(
+                      (student: dataStudent) => {
+                        return (
+                          <option value={student._id}>
+                            {student.first_name} {student.last_name}
+                          </option>
+                        );
+                      }
+                    )}
                   </select>
                 </Box> 
                 {errors.students && <p className='text-red-700'>{String(errors.students.message)}</p>}
@@ -265,7 +292,7 @@ export default function Groups() {
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Delete Group
         </DialogTitle>
-        <button onClick={deleteGroupe}>
+        <button onClick={deleteGroup}>
           <IconButton
             aria-label="close"
             // onClick={handleClose}
@@ -305,7 +332,7 @@ export default function Groups() {
     
       <Box component="section" sx={{padding: '20px'}}>
         <Box sx={{display: 'flex', justifyContent: 'end'}}>
-          <button onClick={handleClickOpen} className='add-group'>
+          <button onClick={() => handleClickOpen()} className='add-group'>
             <Typography sx={{border: '1px solid #00000033', borderRadius: '30px',padding: '5px 10px', fontFamily: 'Nunito', fontWeight: 500, fontSize: '16px'}}> <AddCircleIcon/> Add Group</Typography>
           </button>
         </Box>

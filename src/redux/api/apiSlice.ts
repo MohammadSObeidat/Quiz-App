@@ -27,16 +27,17 @@ export const apiSlice = createApi({
         getGroups: builder.query<any, void>({
             query: () => ({
                 url: `/api/group`}),
-            providesTags: ['group']
+            providesTags: ['group', 'student'],
         }),
         getStudents: builder.query<any, void>({
             query: () => ({
                 url: `/api/student/without-group`}),
-            providesTags: ['student']
+            providesTags: ['group', 'student'],
         }),
-        getGroup: builder.query<any, void>({
+        getGroup: builder.query<any, string | null>({
             query: (id) => ({
                 url: `/api/group/${id}`}),
+            providesTags: ['group', 'student'],
         }),
         createGroup: builder.mutation({
             query: (data) => ({

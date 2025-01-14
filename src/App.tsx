@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import Groups from './modules/groups/components/Groups/Groups'
 import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute'
 import Students from './modules/students/components/Students/Students'
+import Questions from './modules/questions/components/Questions/Questions'
 
 function App() {
   const router = createBrowserRouter([
@@ -37,6 +38,7 @@ function App() {
         {path: 'dashboard', element: <Dashboard/>},
         {path: 'groups', element: <Groups/>},
         {path: 'students', element: <Students/>},
+        {path: 'questions', element: <Questions/>},
       ]
     }
   ])

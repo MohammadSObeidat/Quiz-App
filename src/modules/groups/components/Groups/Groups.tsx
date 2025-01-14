@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { useCreateGroupMutation, useGetGroupQuery, useGetGroupsQuery, useGetStudentsQuery, useRemoveGroupMutation, useUpdateGroupMutation } from '../../../../redux/api/apiSlice';
+import { useCreateGroupMutation, useGetGroupQuery, useGetGroupsQuery, useGetStudentsWithOutGroupQuery, useRemoveGroupMutation, useUpdateGroupMutation } from '../../../../redux/api/apiSlice';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -20,7 +20,7 @@ import { useForm } from 'react-hook-form';
 // import FormControl from '@mui/material/FormControl';
 // import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { toast } from 'react-toastify';
-import removeImg from '../../../../assets/images/images-removebg-preview.png'
+import DeletedConfirmation from '../../../shared/components/DeletedConfirmation/DeletedConfirmation';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -94,7 +94,7 @@ export default function Groups() {
   };
 
   const {data: dataGroups, isLoading: isLoadingGroups} = useGetGroupsQuery()
-  const {data: dataStudents, isLoading: isLoadingStudents} = useGetStudentsQuery()
+  const {data: dataStudents, isLoading: isLoadingStudents} = useGetStudentsWithOutGroupQuery()
   const {data: dataGroup, isLoading: isLoadingGroup} = useGetGroupQuery(id)
 
   const [createGroup] = useCreateGroupMutation()
@@ -156,7 +156,7 @@ export default function Groups() {
         students: [], // Reset the students array as well
       });
     }
-  }, [id]);
+  }, [id, isLoadingGroup, dataGroup]);
   
   if (isLoadingGroups || isLoadingStudents || isLoadingGroup) {
     return <Typography>Loading Groups ...</Typography>; // You can use a spinner or any custom loader
@@ -284,52 +284,9 @@ export default function Groups() {
 
       {/* ================ Delete ========================= */}
 
-      <BootstrapDialog
-        onClose={handleCloseDelete}
-        aria-labelledby="customized-dialog-title"
-        open={openDelete}
-      >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Delete Group
-        </DialogTitle>
-        <button onClick={deleteGroup}>
-          <IconButton
-            aria-label="close"
-            // onClick={handleClose}
-            sx={(theme) => ({
-              position: 'absolute',
-              right: 60,
-              top: 8,
-              color: theme.palette.grey[500],
-            })}
-          >
-            <DoneIcon />
-          </IconButton>
-        </button>
-        <IconButton
-          aria-label="close"
-          onClick={handleCloseDelete}
-          sx={(theme) => ({
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme.palette.grey[500],
-          })}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <Box className="text-center">
-            <Box className='flex justify-center mb-5'>
-              <img src={removeImg} alt="" />
-            </Box>
-            <Typography sx={{fontSize: '20px', fontWeight: 'bold', marginBottom: '10px'}}>Delete This Item ?</Typography>
-            <Typography sx={{fontSize: '16px', color: '#49494999'}}>are you sure you want to delete this item ? if you are sure just <br/> click on delete it</Typography>
-        
-          </Box>
-        </DialogContent>
-      </BootstrapDialog>
-    
+      <DeletedConfirmation handleCloseDelete={handleCloseDelete} openDelete={openDelete} funDelete={deleteGroup} Item={'group'}/>
+
+
       <Box component="section" sx={{padding: '20px'}}>
         <Box sx={{display: 'flex', justifyContent: 'end'}}>
           <button onClick={() => handleClickOpen()} className='add-group'>

@@ -13,12 +13,16 @@ export const apiSlice = createApi({
         }
     }),
 
-    tagTypes: ['group', 'student', 'question'],
+    tagTypes: ['group', 'student', 'question', 'quiz'],
 
     endpoints: (builder) => ({
         quizIncomming: builder.query<any, void>({
             query: () => ({
                 url: `/api/quiz/incomming`})
+        }),
+        quizCompleted: builder.query<any, void>({
+            query: () => ({
+                url: `/api/quiz/completed`})
         }),
         topFiveStudent: builder.query<any, void>({
             query: () => ({
@@ -32,6 +36,11 @@ export const apiSlice = createApi({
         getStudents: builder.query<any, void>({
             query: () => ({
                 url: `/api/student`}),
+        }),
+        getQuizzes: builder.query<any, void>({
+            query: () => ({
+                url: `/api/quiz`}),
+                providesTags: ['quiz'],
         }),
         getStudentsWithOutGroup: builder.query<any, void>({
             query: () => ({
@@ -52,6 +61,14 @@ export const apiSlice = createApi({
             query: (id) => ({
                 url: `/api/question/${id}`}),
         }),
+        getQuiz: builder.query<any, string | null>({
+            query: (id) => ({
+                url: `/api/quiz/${id}`}),
+        }),
+        getQuizResult: builder.query<any, void>({
+            query: () => ({
+                url: `/api/quiz/result`}),
+        }),
         createGroup: builder.mutation({
             query: (data) => ({
                 url: `/api/group`,
@@ -68,6 +85,14 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['question']
         }),
+        createQuiz: builder.mutation({
+            query: (data) => ({
+                url: `/api/quiz`,
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['quiz']
+        }),
         removeGroup: builder.mutation({
             query: (id) => ({
                 url: `/api/group/${id}`,
@@ -81,6 +106,13 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             }),
             invalidatesTags: ['question']
+        }),
+        removeQuiz: builder.mutation({
+            query: (id) => ({
+                url: `/api/quiz/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['quiz']
         }),
         updateGroup: builder.mutation({
             query: ({id, data}) => ({
@@ -98,6 +130,14 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['question']
         }),
+        updateQuiz: builder.mutation({
+            query: ({id, data}) => ({
+                url: `/api/quiz/${id}`,
+                method: 'PUT',
+                body: data
+            }),
+            invalidatesTags: ['quiz']
+        }),
     }),
 })
 
@@ -114,4 +154,11 @@ export const {useQuizIncommingQuery,
                 useRemoveQuestionMutation,
                 useCreateQuestionMutation,
                 useGetQuestionQuery,
-                useUpdateQuestionMutation} = apiSlice
+                useUpdateQuestionMutation,
+                useQuizCompletedQuery,
+                useCreateQuizMutation,
+                useGetQuizzesQuery,
+                useRemoveQuizMutation,
+                useGetQuizQuery,
+                useUpdateQuizMutation,
+                useGetQuizResultQuery} = apiSlice

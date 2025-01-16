@@ -1,6 +1,3 @@
-import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../../../../redux/store/store'
-import { removeUserData } from '../../../../redux/slice/userSlice'
 import Box from '@mui/material/Box';
 import Navbar from '../Navbar/Navbar';
 import SideBar from '../SideBar/SideBar';

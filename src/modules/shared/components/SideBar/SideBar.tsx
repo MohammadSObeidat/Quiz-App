@@ -27,7 +27,7 @@ export default function SideBar() {
                   active={activeItem === 'groups'}  // Conditional active state
                   onClick={() => setActiveItem('groups')}  // Set active item on click
                 > Groups </MenuItem>
-                <MenuItem icon={<img src={quizImg} alt="" />}
+                <MenuItem icon={<img src={quizImg} alt="" />} component={<Link to="/quizzes" />}
                   active={activeItem === 'quizzes'}  // Conditional active state
                   onClick={() => setActiveItem('quizzes')}  // Set active item on click
                 > Quizzes </MenuItem>
@@ -35,7 +35,7 @@ export default function SideBar() {
                   active={activeItem === 'questions'}  // Conditional active state
                   onClick={() => setActiveItem('questions')}  // Set active item on click
                 > Questions </MenuItem>
-                <MenuItem icon={<img src={resultImg} alt="" />}
+                <MenuItem icon={<img src={resultImg} alt="" />} component={<Link to="/results" />}
                   active={activeItem === 'results'}  // Conditional active state
                   onClick={() => setActiveItem('results')}  // Set active item on click
                 > Results </MenuItem>

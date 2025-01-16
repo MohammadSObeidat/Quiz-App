@@ -50,57 +50,7 @@ export default function Dashboard() {
                           </Box>
                         </Box>
               })}
-              <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                  <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                </Box>
-                <Box>
-                  <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                  <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                  <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                </Box>
-                <Box>
-                  <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                  <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                  <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                </Box>
-                <Box>
-                  <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                  <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                  </Box>
-                </Box>
-              </Box>
+              
             </Box>
           </Box>
         </Grid>

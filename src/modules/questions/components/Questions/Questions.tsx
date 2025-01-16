@@ -278,21 +278,6 @@ export default function Questions() {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid size={12}>
-                  <Box>
-                    <Box className='name-question'>
-                      <Typography className='title'>Difficulty</Typography>
-                      <select {...register('difficulty', {
-                        required: 'Difficulty is required'
-                      })}>
-                        <option value="easy" selected>easy</option>
-                        <option value="middle">middle</option>
-                        <option value="hard">hard</option>
-                      </select>
-                    </Box>
-                    {errors.difficulty && <p className='text-red-700'>{String(errors.difficulty.message)}</p>}
-                  </Box>
-                </Grid>
                 {/* Options A, B, C, D */}
                 {['A', 'B', 'C', 'D'].map((option) => (
                   <Grid size={6} key={option}>
@@ -310,31 +295,47 @@ export default function Questions() {
                     )}
                   </Grid>
                 ))}
-                <Grid size={6}>
+                <Grid size={4}>
                   <Box>
                     <Box className='name-question'>
-                      <Typography className='title title-w'>Right Answer</Typography>
-                      <select {...register('answer', {
+                    <Typography className='title title-w'>Right Answer</Typography>
+                    <select {...register('answer', {
                         required: 'Answer is required'
-                      })}>
+                    })}>
                         <option value="A" selected>A</option>
                         <option value="B">B</option>
                         <option value="C">C</option>
                         <option value="D">D</option>
-                      </select>
+                    </select>
                     </Box>
                     {errors.answer && <p className='text-red-700'>{String(errors.answer.message)}</p>}
                   </Box>
-                </Grid><Grid size={6}>
+                </Grid>
+                <Grid size={4}>
                   <Box>
                     <Box className='name-question'>
-                      <Typography className='title title-w'>Category type</Typography>
-                      <select {...register('type', {
+                    <Typography className='title'>Difficulty</Typography>
+                    <select {...register('difficulty', {
+                        required: 'Difficulty is required'
+                    })}>
+                        <option value="easy" selected>Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    </Box>
+                    {errors.difficulty && <p className='text-red-700'>{String(errors.difficulty.message)}</p>}
+                  </Box>
+                </Grid>
+                <Grid size={4}>
+                  <Box>
+                    <Box className='name-question'>
+                    <Typography className='title title-w'>Category type</Typography>
+                    <select {...register('type', {
                         required: 'Type is required'
-                      })}>
+                    })}>
                         <option value="FE" selected>FE</option>
                         <option value="BE">BE</option>
-                      </select>
+                    </select>
                     </Box>
                     {errors.type && <p className='text-red-700'>{String(errors.type.message)}</p>}
                   </Box>

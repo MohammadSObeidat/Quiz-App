@@ -13,6 +13,9 @@ import Groups from './modules/groups/components/Groups/Groups'
 import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute'
 import Students from './modules/students/components/Students/Students'
 import Questions from './modules/questions/components/Questions/Questions'
+import Quizzes from './modules/quizzes/components/Quizzes/Quizzes'
+import QuizDetails from './modules/quizzes/components/QuizDetails/QuizDetails'
+import Results from './modules/results/components/Results/Results'
 
 function App() {
   const router = createBrowserRouter([
@@ -39,6 +42,9 @@ function App() {
         {path: 'groups', element: <Groups/>},
         {path: 'students', element: <Students/>},
         {path: 'questions', element: <Questions/>},
+        {path: 'quizzes', element: <Quizzes/>},
+        {path: 'quiz-details/:id', element: <QuizDetails/>},
+        {path: 'results', element: <Results/>},
       ]
     }
   ])

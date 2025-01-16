@@ -4,3 +4,29 @@
 @tailwind components;
 @tailwind utilities;
 
+.input-container {
+    margin-top: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.input-container input, select {
+    background: transparent;
+    border: 3px solid #FFFFFF;
+    outline: none;
+    color: #FFFFFF;
+    padding-left: 10px;
+    width: 100%;
+    padding: 15px 45px;
+    border-radius: 10px;
+}
+.input-container .icon {
+    position: absolute;
+    margin-left: 15px;
+}
+.input-container input:focus {
+    border: 3px solid #C5D86D;
+}
+.input-container select option {
+    color: #000;
+}

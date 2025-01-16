@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { EmailValidation } from '../../../../services/Validations'
 import { useForgotPasswordMutation } from '../../../../redux/api/authSlice'
 import { toast } from 'react-toastify'
+import { OrbitProgress } from 'react-loading-indicators';
 
 interface forgotData {
   email: string
@@ -59,16 +60,17 @@ export default function ForgotPassword() {
                   </Box>
                   {errors.email && <p className='text-red-600 mt-1'>{String(errors.email.message)}</p>}
                 </Box>
-                <Box className="mt-8 flex justify-between">
+                <Box className="mt-8 flex justify-between items-center">
                   <Button type='submit' variant="contained" sx={{backgroundColor: '#F5F5F5', color: '#000'}} disabled={isSubmitting}>
-                    {isSubmitting && <span className="spinner-border spinner-border-md mr-1 mx-1"></span>}
+                    {/* {isSubmitting && <span className="spinner-border spinner-border-md mr-1 mx-1"></span>} */}
+                    {isSubmitting && <OrbitProgress variant="spokes" color="#f2fbf2" size="small" text="" textColor="" />}
                     Send email <CheckCircleIcon sx={{marginLeft: '5px'}}/>
                   </Button>
                   <Link to={'/login'} className='text-white'>Login? <span style={{color:'#C5D86D'}}>click here</span></Link>
                 </Box>
               </form>
             </Grid>
-            <Grid size={{lg: 6, md: 6, sm: 5, xs: 12}}>
+            <Grid size={{lg: 6, md: 6, sm: 5, xs: 12}} sx={{display: {lg: 'block', md: 'block', sm: 'block', xs: 'none'}}}>
               <img style={{minHeight: '100%'}} src={img} alt="" />
             </Grid>
           </Grid>

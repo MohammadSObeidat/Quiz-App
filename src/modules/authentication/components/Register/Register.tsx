@@ -17,6 +17,7 @@ import { useCreateUserMutation } from '../../../../redux/api/authSlice'
 import { toast } from 'react-toastify'
 import PersonIcon from '@mui/icons-material/Person';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { OrbitProgress } from 'react-loading-indicators';
 
 interface registerData {
   first_name:string,
@@ -127,13 +128,14 @@ export default function Register() {
                 {errors.password && <p className='text-red-600 mt-1'>{String(errors.password.message)}</p>}
                 <Box className="mt-8">
                   <Button type='submit' variant="contained" sx={{backgroundColor: '#F5F5F5', color: '#000'}} disabled={isSubmitting}>
-                    {isSubmitting && <span className="spinner-border spinner-border-md mr-1 mx-1"></span>}
+                    {/* {isSubmitting && <span className="spinner-border spinner-border-md mr-1 mx-1"></span>} */}
+                    {isSubmitting && <OrbitProgress variant="spokes" color="#f2fbf2" size="small" text="" textColor="" />}
                     Sign Up <CheckCircleIcon sx={{marginLeft: '5px'}}/>
                   </Button>
                 </Box>
               </form>
             </Grid>
-            <Grid size={{lg: 6, md: 6, sm: 5, xs: 12}}>
+            <Grid size={{lg: 6, md: 6, sm: 5, xs: 12}} sx={{display: {lg: 'block', md: 'block', sm: 'block', xs: 'none'}}}>
               <img style={{minHeight: '100%'}} src={img} alt="" />
             </Grid>
           </Grid>

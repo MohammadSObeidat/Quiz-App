@@ -143,7 +143,7 @@ export default function Groups() {
     }
   }, [id, isLoadingGroup, dataGroup]);
   
-  if (isLoadingGroups || isLoadingStudents || isLoadingGroup) {
+  if (isLoadingGroups || isLoadingStudents) {
     return <Typography>Loading Groups ...</Typography>; // You can use a spinner or any custom loader
   }
 

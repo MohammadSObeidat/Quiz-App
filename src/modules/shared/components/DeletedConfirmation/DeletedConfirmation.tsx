@@ -32,7 +32,7 @@ export default function DeletedConfirmation({handleCloseDelete, openDelete, funD
         open={openDelete}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Delete Group
+          Delete {Item}
         </DialogTitle>
         <IconButton
           aria-label="close"

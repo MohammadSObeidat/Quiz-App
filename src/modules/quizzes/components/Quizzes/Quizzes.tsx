@@ -23,12 +23,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
 import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { ThreeDot } from 'react-loading-indicators';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -49,6 +49,35 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+interface quizzesData {
+    title: string,
+    description: string,
+    duration: string,
+    questions_number: number,
+    score_per_question: string,
+    schadule: string,
+    difficulty: string,
+    type: string,
+    group: string,
+}
+
+interface groupData {
+    _id: string,
+    name: string
+}
+
+interface quizData {
+    _id: string,
+    title: string,
+    schadule: string
+}
+
+interface quizCompletedData {
+    title: string,
+    status: string,
+    schadule: string,
+    closed_at: string
+}
 
 export default function Quizzes() {
   const [open, setOpen] = useState(false);
@@ -60,9 +89,8 @@ export default function Quizzes() {
   const {
       register,
       handleSubmit,
-      formState: { errors },
+      formState: { errors, isSubmitting },
       reset,
-      setValue,
     } = useForm();
 
   const {data: dataQuizCompleted, isLoading: isLoadingQuizCompleted} = useQuizCompletedQuery()  
@@ -79,16 +107,11 @@ export default function Quizzes() {
     setOpen(false);
   };
 
-  // create and update Question 
-    const handleQuizzes = async (data: questionData) => {
+  //  Create new Quiz
+    const handleQuizzes = async (data: quizzesData) => {
       try {
-        let res;
-        if (id) {
-        //   res = await updateQuestion({ id, data }).unwrap(); // Update existing Question
-        } else {
-          res = await createQuiz(data).unwrap(); // Create new Question
-          setIsShow(true)
-        }
+        const res = await createQuiz(data).unwrap(); 
+        setIsShow(true)
         console.log(res);
         setCode(res?.data?.code)
         toast.success(res?.message);
@@ -98,10 +121,10 @@ export default function Quizzes() {
         reset({
           title: '',
           description: '',
-          options: { A: '', B: '', C: '', D: '' },
-          answer: '',
-          difficulty: '',
-          type: '',
+          duration: '',
+          questions_number: '',
+          score_per_question: '',
+          schadule: ''
         });
       } catch (error: any) {
         toast.error(error?.data?.message);
@@ -138,20 +161,6 @@ export default function Quizzes() {
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
             {id ? 'Set up a edit quiz' : 'Set up a new quiz'}
             </DialogTitle>
-            <button>
-            <IconButton
-                aria-label="close"
-                // onClick={handleClose}
-                sx={(theme) => ({
-                position: 'absolute',
-                right: 60,
-                top: 8,
-                color: theme.palette.grey[500],
-                })}
-            >
-                <DoneIcon />
-            </IconButton>
-            </button>
             <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -183,14 +192,6 @@ export default function Quizzes() {
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Duration (minutes)</Typography>
-                            {/* <select {...register('answer', {
-                                required: 'Answer is required'
-                            })}>
-                                <option value="A" selected>A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                            </select> */}
                             <input type="text"
                             {...register('duration', {
                                 required: 'Duration is required'
@@ -203,13 +204,6 @@ export default function Quizzes() {
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Question number</Typography>
-                            {/* <select {...register('difficulty', {
-                                required: 'Difficulty is required'
-                            })}>
-                                <option value="easy" selected>easy</option>
-                                <option value="middle">middle</option>
-                                <option value="hard">hard</option>
-                            </select> */}
                             <input type="text"
                             {...register('questions_number', {
                                 required: 'Questions number is required'
@@ -222,12 +216,6 @@ export default function Quizzes() {
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Score per question</Typography>
-                            {/* <select {...register('type', {
-                                required: 'Type is required'
-                            })}>
-                                <option value="FE" selected>FE</option>
-                                <option value="BE">BE</option>
-                            </select> */}
                             <input type="text"
                             {...register('score_per_question', {
                                 required: 'Score per question is required'
@@ -248,12 +236,6 @@ export default function Quizzes() {
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title'>Schedule</Typography>
-                            {/* <select {...register('type', {
-                                required: 'Type is required'
-                            })}>
-                                <option value="FE" selected>FE</option>
-                                <option value="BE">BE</option>
-                            </select> */}
                             <input type="datetime-local"
                             {...register('schadule', {
                                 required: 'Schadule is required'
@@ -298,29 +280,27 @@ export default function Quizzes() {
                             <select {...register('group', {
                                 required: 'group is required'
                             })}>
-                                {dataGroups.map((group) => {
+                                {dataGroups.map((group: groupData) => {
                                     return <option value={group._id}>{group.name}</option>
                                 })}
-                                {/* <option value="A" selected>A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option> */}
                             </select>
                             </Box>
                             {errors.group && <p className='text-red-700'>{String(errors.group.message)}</p>}
                         </Box>
                     </Grid>
                 </Grid>               
-
+                </Box>
+                <Box sx={{display: 'flex', justifyContent: 'end', marginTop: '10px'}}>
+                    <button className='btn-action' disabled={isSubmitting}>
+                    {id ? 'Update' : 'Create'}
+                    {isSubmitting && <Typography sx={{marginLeft: '10px', display: 'inline'}}><ThreeDot color="#e9f3e9" size="small" text="" textColor="" /></Typography>}
+                    </button>
                 </Box>
             </DialogContent>
             </form>
         </BootstrapDialog>
 
-        {/* ========================== Code =========================== */}
-        {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
+    {/* ========================== Code =========================== */}
       <BootstrapDialog
         onClose={() => setIsShow(false)}
         aria-labelledby="customized-dialog-title"
@@ -332,21 +312,6 @@ export default function Quizzes() {
             }
             }}
       >
-        {/* <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
-        </DialogTitle> */}
-        {/* <IconButton
-          aria-label="close"
-          onClick={() => setIsShow(false)}
-          sx={(theme) => ({
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme.palette.grey[500],
-          })}
-        >
-          <CloseIcon />
-        </IconButton> */}
         <DialogContent dividers sx={{textAlign: 'center'}}>
             <CheckCircleIcon sx={{fontSize: '50px'}}/>
             <Typography sx={{fontSize: '20px', marginBlock: '15px', fontWeight: 'bold'}}>Quiz was successfully created</Typography>
@@ -388,7 +353,7 @@ export default function Quizzes() {
                     <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '20px'}}>Upcoming quizzes</Typography>
                     </Box>
                     <Box className="cards flex flex-col gap-4">
-                    {dataQuizzes.map((quiz) => {
+                    {dataQuizzes.map((quiz: quizData) => {
                         return  <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
                                 <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
                                     <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
@@ -415,7 +380,9 @@ export default function Quizzes() {
                     <Box sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '20px', marginTop: '15px'}}>
                         <Box className="flex justify-between">
                             <Typography className='pb-5'>Completed Quizzes</Typography>
-                            <Typography className='pb-5' variant='body1'>Results <ArrowRightAltIcon sx={{color: '#C5D86D'}}/></Typography>
+                            <Link to={'/results'}>
+                                <Typography className='pb-5' variant='body1'>Results <ArrowRightAltIcon sx={{color: '#C5D86D'}}/></Typography>
+                            </Link>
                         </Box>
                     <Box>
                         <TableContainer component={Paper}>
@@ -435,16 +402,6 @@ export default function Quizzes() {
                                                     <StyledTableCell align="center">{quizCompleted.status}</StyledTableCell>
                                                     <StyledTableCell align="center">{new Date(quizCompleted.schadule).toISOString().split('T')[0]}</StyledTableCell>
                                                     <StyledTableCell align="center">{new Date(quizCompleted.closed_at).toISOString().split('T')[1].replace('Z', '').replace('.728', '')}</StyledTableCell>
-                                                    {/* <StyledTableCell align="center">
-                                                        <Box>
-                                                            <button title='Edit' onClick={() => handleClickOpen(question._id)}>
-                                                                <BorderColorOutlinedIcon sx={{color: '#FB7C19'}}  className='mx-4'/>
-                                                            </button>
-                                                            <button title='Delete' onClick={() => handleClickOpenDelete(question._id)}>
-                                                                <DeleteOutlinedIcon sx={{color: '#FB7C19'}}/>
-                                                            </button>
-                                                        </Box>
-                                                    </StyledTableCell> */}
                                                 </TableRow>
                                     })}
                                 </TableBody>

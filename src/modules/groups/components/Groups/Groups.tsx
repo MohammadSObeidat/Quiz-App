@@ -11,16 +11,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
 import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
-// import TextField from '@mui/material/TextField';
-// import MenuItem from '@mui/material/MenuItem';
-// import InputLabel from '@mui/material/InputLabel';
-// import FormControl from '@mui/material/FormControl';
-// import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { toast } from 'react-toastify';
 import DeletedConfirmation from '../../../shared/components/DeletedConfirmation/DeletedConfirmation';
+import { ThreeDot } from 'react-loading-indicators';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -47,16 +42,6 @@ interface data {
   name: string,
   students: string[]
 }
-interface student {
- first_name: string,
- last_name: string
-}
-
-// interface dataGroup {
-//   _id: string,
-//   name: string,
-//   students: student[],
-// }
 
 export default function Groups() {
   const [id, setId] = useState<string | null>(null);
@@ -65,7 +50,7 @@ export default function Groups() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     setValue,
   } = useForm();
@@ -172,22 +157,8 @@ export default function Groups() {
       >
         <form onSubmit={handleSubmit(handleGroup)}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Set up a new Group
+          {id ? 'Set up a edit group' : 'Set up a new group'}
         </DialogTitle>
-        <button>
-          <IconButton
-            aria-label="close"
-            // onClick={handleClose}
-            sx={(theme) => ({
-              position: 'absolute',
-              right: 60,
-              top: 8,
-              color: theme.palette.grey[500],
-            })}
-          >
-            <DoneIcon />
-          </IconButton>
-        </button>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -214,15 +185,6 @@ export default function Groups() {
               </Box>
               <Box>
                 <Box className='select-student'>
-                  {/* <select {...register('students', {
-                    required: 'Students is required'
-                  })} onChange={(event) => handleChange(event)} multiple>
-                    <option value="" style={{backgroundColor: '#FFEDDF'}}>List Students</option>
-                    {dataStudents.map((student: dataStudent) => {
-                      return <option value={student._id}>{student.first_name} {student.last_name}</option>
-                    })}
-                  </select> */}
-
                   <select
                     {...register("students", {
                       required: "Students is required",
@@ -247,36 +209,12 @@ export default function Groups() {
                 </Box> 
                 {errors.students && <p className='text-red-700'>{String(errors.students.message)}</p>}
               </Box>
-               {/* <TextField id="outlined-basic" 
-               label="Group Name" 
-               variant="outlined" sx={{width: '500px'}} 
-               helperText={errors?.name?.message}
-               error={!!errors?.name}
-               {...register('name', {
-                required: 'Name is required'
-              })}/>
-
-               <FormControl error={!!errors?.students}>
-                <InputLabel  id="demo-simple-select-error-label">List Students</InputLabel>
-                <Select
-                  labelId="demo-simple-select-error-label"
-                  id="demo-simple-select-error"
-                  value={students}
-                  label="List Students"
-                  multiple
-                  helperText={errors?.students?.message}
-                  error={!!errors?.students}
-                  {...register('students', {
-                    required: 'Students is required'
-                  })}
-                  onChange={(event) => handleChange(event)}
-                >
-                  {dataStudents.map((student: dataStudent) => {
-                    return <MenuItem value={student._id}>{student.first_name} {student.last_name}</MenuItem>
-                  })}
-                </Select>
-              </FormControl> */}
-
+            </Box>
+            <Box sx={{display: 'flex', justifyContent: 'end'}}>
+              <button className='btn-action' disabled={isSubmitting}>
+                {id ? 'Update' : 'Create'}
+                {isSubmitting && <Typography sx={{marginLeft: '10px', display: 'inline'}}><ThreeDot color="#e9f3e9" size="small" text="" textColor="" /></Typography>}
+              </button>
             </Box>
         </DialogContent>
         </form>

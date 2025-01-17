@@ -108,7 +108,7 @@ export default function Register() {
                 <Box className="mb-5">
                   <Box className="input-container">
                     <AccountCircleIcon className='text-white icon'/>
-                    <select {...register('role', {
+                    <select className='select' {...register('role', {
                       required: 'role is required'
                     })}>
                       <option value="Instructor">Instructor</option>

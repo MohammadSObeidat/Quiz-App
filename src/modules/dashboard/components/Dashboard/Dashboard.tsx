@@ -25,8 +25,8 @@ export default function Dashboard() {
   const {data: quizzes, isLoading: isLoadingQuiz} = useQuizIncommingQuery()
   const {data: students, isLoading: isLoadingStudent} = useTopFiveStudentQuery()
 
-  if (isLoadingQuiz) return <Typography>Loading quizzes and students...</Typography>;
-  if (isLoadingStudent) return <Typography>Loading students...</Typography>;
+  if (isLoadingQuiz || isLoadingStudent) return <Typography>Loading quizzes and students...</Typography>;
+  // if (isLoadingStudent) return <Typography>Loading students...</Typography>;
 
   return (
     <Box component="section" sx={{padding: '30px'}}>

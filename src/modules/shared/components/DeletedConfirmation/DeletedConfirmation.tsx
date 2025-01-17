@@ -3,7 +3,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -35,20 +34,6 @@ export default function DeletedConfirmation({handleCloseDelete, openDelete, funD
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Delete Group
         </DialogTitle>
-        <button onClick={funDelete}>
-          <IconButton
-            aria-label="close"
-            // onClick={handleClose}
-            sx={(theme) => ({
-              position: 'absolute',
-              right: 60,
-              top: 8,
-              color: theme.palette.grey[500],
-            })}
-          >
-            <DoneIcon />
-          </IconButton>
-        </button>
         <IconButton
           aria-label="close"
           onClick={handleCloseDelete}
@@ -68,7 +53,11 @@ export default function DeletedConfirmation({handleCloseDelete, openDelete, funD
             </Box>
             <Typography sx={{fontSize: '20px', fontWeight: 'bold', marginBottom: '10px'}}>Delete This {Item} ?</Typography>
             <Typography sx={{fontSize: '16px', color: '#49494999'}}>are you sure you want to delete this item ? if you are sure just <br/> click on delete it</Typography>
-        
+          </Box>
+          <Box sx={{display: 'flex', justifyContent: 'end', marginTop: '40px'}}>
+            <button onClick={funDelete} className='btn-action'>
+              Delete
+            </button>
           </Box>
         </DialogContent>
       </BootstrapDialog>

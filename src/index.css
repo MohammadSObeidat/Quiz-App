@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
 }
-.input-container input, select {
+.input-container input, .select {
     background: transparent;
     border: 3px solid #FFFFFF;
     outline: none;
@@ -27,6 +27,17 @@
 .input-container input:focus {
     border: 3px solid #C5D86D;
 }
-.input-container select option {
+.input-container .select option {
     color: #000;
+}
+.btn-action {
+    background-color: #000;
+    color: #FFFFFF;
+    padding: 5px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: 0.5s;
+}
+.btn-action:hover {
+    transform: scale(1.1);
 }

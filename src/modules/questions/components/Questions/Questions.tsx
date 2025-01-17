@@ -9,7 +9,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import DoneIcon from '@mui/icons-material/Done';
 import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -26,6 +25,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid2';
+import { ThreeDot } from 'react-loading-indicators';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -78,7 +78,7 @@ export default function Questions() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset,
     setValue,
   } = useForm();
@@ -213,7 +213,7 @@ export default function Questions() {
 
   return (
     <>
-    {/* ============================ Crete =========================== */}
+    {/* ============================ Create =========================== */}
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -229,20 +229,6 @@ export default function Questions() {
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           {id ? 'Set up a edit question' : 'Set up a new question'}
         </DialogTitle>
-        <button>
-          <IconButton
-            aria-label="close"
-            // onClick={handleClose}
-            sx={(theme) => ({
-              position: 'absolute',
-              right: 60,
-              top: 8,
-              color: theme.palette.grey[500],
-            })}
-          >
-            <DoneIcon />
-          </IconButton>
-        </button>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -256,7 +242,7 @@ export default function Questions() {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-            <Box className="pt-5 pb-10">
+            <Box className="pt-5 pb-5">
               <Grid container spacing={2}>
                 <Grid size={12}>
                   <Box>
@@ -341,7 +327,12 @@ export default function Questions() {
                   </Box>
                 </Grid>
               </Grid>               
-
+              <Box sx={{display: 'flex', justifyContent: 'end', marginTop: '40px'}}>
+                <button className='btn-action' disabled={isSubmitting}>
+                  {id ? 'Update' : 'Create'}
+                  {isSubmitting && <Typography sx={{marginLeft: '10px', display: 'inline'}}><ThreeDot color="#e9f3e9" size="small" text="" textColor="" /></Typography>}
+                </button>
+              </Box>
             </Box>
         </DialogContent>
         </form>

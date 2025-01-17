@@ -1,4 +1,4 @@
-import { Button, DialogContent, Typography } from '@mui/material';
+import { DialogContent, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlined';
@@ -17,120 +17,97 @@ import Dialog from '@mui/material/Dialog';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
-  interface updateData {
-    title: string
-  }
+interface updateData {
+  title: string
+}
 
 export default function QuizDetails() {
-    const [openDelete, setOpenDelete] = useState(false);
-    const [open, setOpen] = useState(false);
-    const {id} = useParams()
-    const navigate = useNavigate()
-    const {
-      register,
-      formState: { errors },
-      reset,
-      setValue,
-    } = useForm();
-    const {
-      register: registerEdit,
-      formState: { errors: errorsEdit },
-      handleSubmit,
-      setValue: setValueEdit
-    } = useForm();
+  const [openDelete, setOpenDelete] = useState(false);
+  const [open, setOpen] = useState(false);
+  const {id} = useParams()
+  const navigate = useNavigate()
+  const {
+    register,
+    formState: { errors },
+    setValue,
+  } = useForm();
 
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
-      const handleClose = () => {
-        setOpen(false);
-      };
+  const {
+    register: registerEdit,
+    formState: { errors: errorsEdit },
+    handleSubmit,
+    setValue: setValueEdit
+  } = useForm();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickOpenDelete = () => {
+    setOpenDelete(true);
+  };
 
-    const handleClickOpenDelete = () => {
-        setOpenDelete(true);
-      };
-    
-      const handleCloseDelete = () => {
-        setOpenDelete(false);
-      };
-    const {data, isLoading} = useGetQuizQuery(id)
-    const [removeQuiz] = useRemoveQuizMutation()
-    const [updateQuiz] = useUpdateQuizMutation()
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+  const {data, isLoading} = useGetQuizQuery(id)
+  const [removeQuiz] = useRemoveQuizMutation()
+  const [updateQuiz] = useUpdateQuizMutation()
 
-    const editQuiz = async (data: updateData) => {
-      try {
-        const res = await updateQuiz({id, data}).unwrap();
-        toast.success(res?.message);
-        navigate('/quizzes')
-      } catch (error: any) {
-        toast.error(error?.data?.message)
-      }
+  const editQuiz = async (data: updateData) => {
+    try {
+      const res = await updateQuiz({id, data}).unwrap();
+      toast.success(res?.message);
+      navigate('/quizzes')
+    } catch (error: any) {
+      toast.error(error?.data?.message)
     }
-     // Delete Quiz
-      const deleteQuiz = async () => {
-        try {
-          const res = await removeQuiz(id).unwrap();
-          toast.success(res.message)
-          handleCloseDelete()
-          navigate('/quizzes')
-        } catch (error: any) {
-          toast.error(error?.data?.message) 
-        }
-      }
+  }
+
+  // Delete Quiz
+  const deleteQuiz = async () => {
+    try {
+      const res = await removeQuiz(id).unwrap();
+      toast.success(res.message)
+      handleCloseDelete()
+      navigate('/quizzes')
+    } catch (error: any) {
+      toast.error(error?.data?.message) 
+    }
+  }
 
   useEffect(() => {
-      if (id) {
-        // Fetch the question details if 'id' exists
-        if (data && !isLoading) {
-          console.log({ data });
-          setValueEdit("title", data.title);
-          setValue("questions_number", data.questions_number);
-          setValue("score_per_question", data.score_per_question);
-          setValue("description", data.description);
-          setValue("duration", data.duration);
-          setValue("difficulty", data.difficulty);
-          setValue("type", data.type);
-          setValue("code", data.code);
-        } else if (!isLoading) {
-          // Reset the form fields
-          reset({
-            title: '',
-            description: '',
-            options: { A: '', B: '', C: '', D: '' },
-            answer: '',
-            difficulty: '',
-            type: ''
-          });
-        }
-      } else {
-        // Reset the form fields
-        reset({
-          title: '',
-          description: '',
-          options: { A: '', B: '', C: '', D: '' },
-          answer: '',
-          difficulty: '',
-          type: ''
-        });
-      }
-    }, [id, isLoading, data]);
+    if (id) {
+      // Fetch the question details if 'id' exists
+      if (data && !isLoading) {
+        console.log({ data });
+        setValueEdit("title", data.title);
+        setValue("questions_number", data.questions_number);
+        setValue("score_per_question", data.score_per_question);
+        setValue("description", data.description);
+        setValue("duration", data.duration);
+        setValue("difficulty", data.difficulty);
+        setValue("type", data.type);
+        setValue("code", data.code);
+      } 
+    } 
+  }, [id, isLoading, data]);
 
-    if (isLoading) return <Typography>Loading Quiz</Typography>
+  if (isLoading) return <Typography>Loading Quiz</Typography>
 
   return (
     <>
-        {/* ========================== Update =========================== */}
-        {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
+      {/* ========================== Update =========================== */}
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -142,23 +119,7 @@ export default function QuizDetails() {
             }
             }}
       >
-        {/* <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
-        </DialogTitle> */}
-        {/* <IconButton
-          aria-label="close"
-          onClick={() => setIsShow(false)}
-          sx={(theme) => ({
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme.palette.grey[500],
-          })}
-        >
-          <CloseIcon />
-        </IconButton> */}
         <DialogContent dividers >
-            {/* <CheckCircleIcon sx={{fontSize: '50px'}}/> */}
             <Typography sx={{fontSize: '20px', marginBlock: '15px', fontWeight: 'bold'}}>Update Quiz Title</Typography>
             <form onSubmit={handleSubmit(editQuiz)}>
               <Box className='name-question'>
@@ -168,10 +129,6 @@ export default function QuizDetails() {
                       {...registerEdit('title', {
                         required: 'Title is required'
                       })}/>
-                      {/* <button onClick={copyCode}>
-                          <ContentCopyIcon className='copy-icon'/>
-                      </button> */}
-
                   </Box>
               </Box>
                       {errorsEdit.title && <p className='text-red-700'>{String(errorsEdit.title.message)}</p>}
@@ -183,7 +140,7 @@ export default function QuizDetails() {
       </BootstrapDialog>
         {/* ================ Delete ========================= */}
         
-              <DeletedConfirmation handleCloseDelete={handleCloseDelete} openDelete={openDelete} funDelete={deleteQuiz} Item={'quiz'}/>
+        <DeletedConfirmation handleCloseDelete={handleCloseDelete} openDelete={openDelete} funDelete={deleteQuiz} Item={'quiz'}/>
         
         <Link to={'/quizzes'}>
             <Typography sx={{margin: '15px 0 0 15px'}}>Quizzes <DoubleArrowIcon sx={{color: '#C5D86D'}}/> {data.title}</Typography>
@@ -201,14 +158,6 @@ export default function QuizDetails() {
                             <Box>
                                 <Box className='name-question'>
                                 <Typography className='title title-w'>Duration (minutes)</Typography>
-                                {/* <select {...register('answer', {
-                                    required: 'Answer is required'
-                                })}>
-                                    <option value="A" selected>A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                </select> */}
                                 <input type="text" disabled
                                 {...register('duration', {
                                     required: 'Duration is required'
@@ -221,13 +170,6 @@ export default function QuizDetails() {
                             <Box>
                                 <Box className='name-question'>
                                 <Typography className='title title-w'>Question number</Typography>
-                                {/* <select {...register('difficulty', {
-                                    required: 'Difficulty is required'
-                                })}>
-                                    <option value="easy" selected>easy</option>
-                                    <option value="middle">middle</option>
-                                    <option value="hard">hard</option>
-                                </select> */}
                                 <input type="text" disabled
                                 {...register('questions_number', {
                                     required: 'Questions number is required'
@@ -240,12 +182,6 @@ export default function QuizDetails() {
                             <Box>
                                 <Box className='name-question'>
                                 <Typography className='title title-w'>Score per question</Typography>
-                                {/* <select {...register('type', {
-                                    required: 'Type is required'
-                                })}>
-                                    <option value="FE" selected>FE</option>
-                                    <option value="BE">BE</option>
-                                </select> */}
                                 <input type="text" disabled
                                 {...register('score_per_question', {
                                     required: 'Score per question is required'
@@ -296,14 +232,6 @@ export default function QuizDetails() {
                             <Box>
                                 <Box className='name-question'>
                                 <Typography className='title title-w'>Code</Typography>
-                                {/* <select {...register('answer', {
-                                    required: 'Answer is required'
-                                })}>
-                                    <option value="A" selected>A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                </select> */}
                                 <input type="text" disabled
                                 {...register('code', {
                                     required: 'Code is required'

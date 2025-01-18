@@ -49,7 +49,9 @@ export default function DeletedConfirmation({handleCloseDelete, openDelete, funD
         <DialogContent dividers>
           <Box className="text-center">
             <Box className='flex justify-center mb-5'>
-              <img src={removeImg} alt="" />
+              <Box sx={{width: {lg: '225px', md: '225px', sm: '150px', xs: '150px'}}}> 
+                <img src={removeImg} alt="" />
+              </Box>
             </Box>
             <Typography sx={{fontSize: '20px', fontWeight: 'bold', marginBottom: '10px'}}>Delete This {Item} ?</Typography>
             <Typography sx={{fontSize: '16px', color: '#49494999'}}>are you sure you want to delete this item ? if you are sure just <br/> click on delete it</Typography>

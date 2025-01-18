@@ -188,7 +188,7 @@ export default function Quizzes() {
                             {errors.title && <p className='text-red-700'>{String(errors.title.message)}</p>}
                         </Box>
                     </Grid>
-                    <Grid size={4}>
+                    <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Duration (minutes)</Typography>
@@ -200,7 +200,7 @@ export default function Quizzes() {
                             {errors.duration && <p className='text-red-700'>{String(errors.duration.message)}</p>}
                         </Box>
                     </Grid>
-                    <Grid size={4}>
+                    <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Question number</Typography>
@@ -212,7 +212,7 @@ export default function Quizzes() {
                             {errors.questions_number && <p className='text-red-700'>{String(errors.questions_number.message)}</p>}
                         </Box>
                     </Grid>
-                    <Grid size={4}>
+                    <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Score per question</Typography>
@@ -232,7 +232,7 @@ export default function Quizzes() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid size={9}>
+                    <Grid size={{lg: 9, md:9, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title'>Schedule</Typography>
@@ -244,7 +244,7 @@ export default function Quizzes() {
                             {errors.schadule && <p className='text-red-700'>{String(errors.schadule.message)}</p>}
                         </Box>
                     </Grid>
-                    <Grid size={4}>
+                    <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Difficulty level</Typography>
@@ -259,7 +259,7 @@ export default function Quizzes() {
                             {errors.difficulty && <p className='text-red-700'>{String(errors.difficulty.message)}</p>}
                         </Box>
                     </Grid>
-                    <Grid size={4}>
+                    <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Category type</Typography>
@@ -273,7 +273,7 @@ export default function Quizzes() {
                             {errors.type && <p className='text-red-700'>{String(errors.type.message)}</p>}
                         </Box>
                     </Grid>
-                    <Grid size={4}>
+                    <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                         <Box>
                             <Box className='name-question'>
                             <Typography className='title title-w'>Group name</Typography>
@@ -328,29 +328,29 @@ export default function Quizzes() {
         </DialogContent>
       </BootstrapDialog>
 
-        <Box sx={{ padding: '20px' }}>
+        <Box sx={{padding: {lg: '20px', md: '20px', sm: '15px', xs:'15px'}}}>
         <Grid container spacing={2}>
-            <Grid size={6}>
-            <Box className="grid-one-container">
-                <button className='grid-one-link' onClick={() => handleClickOpen()}>
-                    <Box className="grid-one">
-                        <AddAlarmIcon sx={{fontSize: '60px'}}/>
-                        <Typography className='grid-one-title'>Set up a new quiz</Typography>
-                    </Box>
-                </button>
-                <Link to={'/questions'} className='grid-one-link'>
-                    <Box className="grid-one">
-                        <CommentBankOutlinedIcon sx={{fontSize: '60px'}}/>
-                        <Typography className='grid-one-title'>Question Bank</Typography>
-                    </Box>
-                </Link>
-            </Box>
+            <Grid size={{lg: 6, md: 6, sm: 6, xs: 12}}>
+                <Box className="grid-one-container">
+                    <button className='grid-one-link' onClick={() => handleClickOpen()}>
+                        <Box className="grid-one">
+                            <AddAlarmIcon sx={{fontSize: '60px'}}/>
+                            <Typography className='grid-one-title'>Set up a new quiz</Typography>
+                        </Box>
+                    </button>
+                    <Link to={'/questions'} className='grid-one-link'>
+                        <Box className="grid-one">
+                            <CommentBankOutlinedIcon sx={{fontSize: '60px'}}/>
+                            <Typography className='grid-one-title'>Question Bank</Typography>
+                        </Box>
+                    </Link>
+                </Box>
             </Grid>
 
-            <Grid size={6}>
+            <Grid size={{lg: 6, md: 6, sm: 6, xs: 12}}>
                 <Box className="quizzes" sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '15px'}}>
                     <Box className="flex items-center justify-between pb-4">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '20px'}}>Upcoming quizzes</Typography>
+                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: {lg: '20px', md: '20px', sm: '15px', xs: '15px'}}}>Upcoming quizzes</Typography>
                     </Box>
                     <Box className="cards flex flex-col gap-4">
                     {dataQuizzes.map((quiz: quizData) => {
@@ -359,16 +359,16 @@ export default function Quizzes() {
                                     <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
                                 </Box>
                                 <Box className="w-full">
-                                    <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>{quiz.title}</Typography>
+                                    <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: {lg: '18px', md:'18px', sm: '15px', xs: '15px'}}}>{quiz.title}</Typography>
                                     <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>{new Date(quiz.schadule).toISOString().split('T')[0]}</Typography>
+                                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: {lg: '14px', md: '12px', sm: '12px', xs: '12px'}}}>{new Date(quiz.schadule).toISOString().split('T')[0]}</Typography>
                                     <Divider orientation="vertical" variant="fullWidth" flexItem />
-                                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>{new Date(quiz.schadule).toISOString().split('T')[1].replace('00.000Z', '')} AM</Typography>
+                                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: {lg: '14px', md: '12px', sm: '12px', xs: '12px'}}}>{new Date(quiz.schadule).toISOString().split('T')[1].replace('00.000Z', '')} AM</Typography>
                                     </Box>
                                     <Box className="flex justify-between">
-                                        <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
+                                        <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: {lg: '14px', md: '12px', sm: '12px', xs: '12px'}}}>No. of student’s enrolled: 32</Typography>
                                         <Link to={`/quiz-details/${quiz._id}`}>
-                                            <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px', marginRight: '20px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
+                                            <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: {lg: '14px', md: '12px', sm: '12px', xs: '12px'}, marginRight: '20px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
                                         </Link>
                                     </Box>
                                 </Box>
@@ -376,7 +376,7 @@ export default function Quizzes() {
                     })}
                 </Box>
                 </Box>
-                <Box component="section" sx={{padding: '20px'}}>
+                <Box component="section" sx={{padding: {lg: '20px', md: '20px', sm: '15px', xs:'10px'}}}>
                     <Box sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '20px', marginTop: '15px'}}>
                         <Box className="flex justify-between">
                             <Typography className='pb-5'>Completed Quizzes</Typography>

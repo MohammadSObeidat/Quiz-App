@@ -1,6 +1,7 @@
 .grid-one-container {
     display: flex;
     gap: 30px;
+    flex-wrap: wrap;
 }
 .grid-one {
     border: 1px solid #00000033;

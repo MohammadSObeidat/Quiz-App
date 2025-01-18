@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import DeletedConfirmation from '../../../shared/components/DeletedConfirmation/DeletedConfirmation';
 import { ThreeDot } from 'react-loading-indicators';
+import Grid from '@mui/material/Grid2';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -173,42 +174,48 @@ export default function Groups() {
         </IconButton>
         <DialogContent dividers>
             <Box className="grid gap-5 pt-5 pb-10">
-              <Box>
-                <Box className='name-group'>
-                  <Typography className='title'>Group Name</Typography>
-                  <input type="text"
-                  {...register('name', {
-                    required: 'Name is required'
-                  })} />
+            <Grid container spacing={2}>
+              <Grid size={{xs: 12}}>
+                <Box>
+                  <Box className='name-group'>
+                    <Typography className='title'>Group Name</Typography>
+                    <input type="text"
+                    {...register('name', {
+                      required: 'Name is required'
+                    })} />
+                  </Box>
+                  {errors.name && <p className='text-red-700'>{String(errors.name.message)}</p>}
                 </Box>
-                {errors.name && <p className='text-red-700'>{String(errors.name.message)}</p>}
-              </Box>
-              <Box>
-                <Box className='select-student'>
-                  <select
-                    {...register("students", {
-                      required: "Students is required",
-                    })}
-                    onChange={(event) => handleChange(event)}
-                    multiple
-                  >
-                    <option value="" style={{ backgroundColor: "#FFEDDF" }}>
-                      List Students
-                    </option>
-                    {/* The options are populated by combining two arrays: [...dataStudents, ...(dataGroup?.students || [])]*/}
-                    {[...dataStudents, ...(dataGroup?.students || [])].map(
-                      (student: dataStudent) => {
-                        return (
-                          <option value={student._id}>
-                            {student.first_name} {student.last_name}
-                          </option>
-                        );
-                      }
-                    )}
-                  </select>
-                </Box> 
-                {errors.students && <p className='text-red-700'>{String(errors.students.message)}</p>}
-              </Box>
+              </Grid>
+              <Grid size={{xs: 12}}>
+                <Box>
+                  <Box className='select-student'>
+                    <select
+                      {...register("students", {
+                        required: "Students is required",
+                      })}
+                      onChange={(event) => handleChange(event)}
+                      multiple
+                    >
+                      <option value="" style={{ backgroundColor: "#FFEDDF" }}>
+                        List Students
+                      </option>
+                      {/* The options are populated by combining two arrays: [...dataStudents, ...(dataGroup?.students || [])]*/}
+                      {[...dataStudents, ...(dataGroup?.students || [])].map(
+                        (student: dataStudent) => {
+                          return (
+                            <option value={student._id}>
+                              {student.first_name} {student.last_name}
+                            </option>
+                          );
+                        }
+                      )}
+                    </select>
+                  </Box> 
+                  {errors.students && <p className='text-red-700'>{String(errors.students.message)}</p>}
+                </Box>
+              </Grid>
+            </Grid>
             </Box>
             <Box sx={{display: 'flex', justifyContent: 'end'}}>
               <button className='btn-action' disabled={isSubmitting}>

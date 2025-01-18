@@ -146,7 +146,7 @@ export default function QuizDetails() {
             <Typography sx={{margin: '15px 0 0 15px'}}>Quizzes <DoubleArrowIcon sx={{color: '#C5D86D'}}/> {data.title}</Typography>
         </Link>
         <Box component="section" sx={{minHeight: '90vh', display: 'flex', justifyContent: 'center',flexDirection: 'column', alignItems: 'center'}}>
-            <Box sx={{width: '450px', border: '1px solid #0000004D', borderRadius: '10px', padding: '20px 15px'}}>
+            <Box sx={{maxWidth: '450px', border: '1px solid #0000004D', borderRadius: '10px', padding: {lg: '20px 35px', md: '20px 35px', sm: '20px 55px' ,xs:'20px 55px'}}}>
                 <Typography variant='h3' sx={{fontSize: '24px', fontWeight: 'bold'}}>{data.title}</Typography>
                 <Box sx={{display: 'flex', gap: '25px', marginBlock: '10px'}}>
                     <Typography sx={{display: 'flex', alignItems: 'center', gap: '10px'}}><EventAvailableOutlinedIcon/> {new Date(data.schadule).toISOString().split('T')[0]}</Typography>

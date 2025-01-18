@@ -48,11 +48,6 @@ export default function Students() {
     <Box component="section" sx={{padding: '20px'}}>
       <Box sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '20px', marginTop: '15px'}}>
         <Typography className='pb-5'>Students list</Typography>
-        {/* <Box className="grid xl:grid-cols-8 gap-2 pb-5">
-          <Typography sx={{border: '1px solid #00000033', borderRadius: '30px',padding: '5px 10px', fontFamily: 'Nunito', fontWeight: 500, fontSize: '16px'}} className='text-center'> Group 1</Typography>
-          <Typography sx={{border: '1px solid #00000033', borderRadius: '30px',padding: '5px 10px', fontFamily: 'Nunito', fontWeight: 500, fontSize: '16px'}}> Group 2</Typography>
-          <Typography sx={{border: '1px solid #00000033', borderRadius: '30px',padding: '5px 10px', fontFamily: 'Nunito', fontWeight: 500, fontSize: '16px'}}> Group 3</Typography>
-        </Box> */}
         <Box className="items grid gap-4 xl:grid-cols-2">
             {currentStudents.map((student: studentData) => {
                 return <Box className="item flex justify-between" sx={{border: '1px solid #00000033', borderRadius: '5px', padding: '10px'}}>

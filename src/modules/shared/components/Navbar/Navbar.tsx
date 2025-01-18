@@ -9,7 +9,6 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
-import logo from '../../../../assets/images/Logo icon.png'
 import AddAlarmIcon from '@mui/icons-material/AddAlarm';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -17,7 +16,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '../../../../redux/store/store'
 import { Button } from '@mui/material';
 import { removeUserData } from '../../../../redux/slice/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const settings = ['Change password', 'Logout'];
 
@@ -37,6 +37,16 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   const logout = () => {
     dispatch(removeUserData())
     localStorage.removeItem('token')
@@ -48,26 +58,75 @@ export default function Navbar() {
     <AppBar position="static" color= 'inherit' sx={{borderBottom: '1px solid #00000033'}}>
         <Container maxWidth="xl">
             <Toolbar disableGutters>
-                <Box sx={{display: 'flex',flexGrow: 1.05, justifyContent: 'space-around', alignItems: 'center'}}>
-                    <MenuIcon sx={{fontSize:'40px'}}/>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        >
-                        <img src={logo} alt="" />
-                    </Typography>
+                <Box sx={{ flexGrow: 6, display: {lg: 'flex',  md: 'flex', sm: 'none', xs: 'none'} ,  justifyContent: 'space-between' }}>
+                    <Typography variant='body1' sx={{fontSize: '20px', fontWeight: 'bold', paddingInline: '15px'}}>Dashboard</Typography>
+                    <Link to={'/quizzes'}>
+                      <Typography variant='body1' sx={{display: 'flex', alignItems: 'center',fontSize: '17px', fontWeight: '500', paddingInline: '15px', border: '1px solid #00000033', borderRadius: '30px', mr:'15px'}}>
+                          <AddAlarmIcon/>
+                          New quiz
+                      </Typography>
+                    </Link>
                 </Box>
-
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Box sx={{ flexGrow: 6, display: {  md: 'flex', } ,  justifyContent: 'space-between' }}>
-                        <Typography variant='body1' sx={{fontSize: '20px', fontWeight: 'bold', paddingInline: '15px'}}>Dashboard</Typography>
-                        <Typography variant='body1' sx={{display: 'flex', alignItems: 'center',fontSize: '17px', fontWeight: '500', paddingInline: '15px', border: '1px solid #00000033', borderRadius: '30px', mr:'15px'}}>
-                            <AddAlarmIcon/>
-                            New quiz
-                        </Typography>
-                    </Box>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-
+                <Divider sx={{display: {lg: 'block',  md: 'block', sm: 'none', xs: 'none'}}} orientation="vertical" variant="fullWidth" flexItem />
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
+                    >
+                    <MenuIcon />
+                    </IconButton>
+                    <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElNav}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{ display: { xs: 'block', md: 'none' } }}
+                    >
+                      <Link to={'/dashboard'}>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography sx={{ textAlign: 'center' }}>Dashboard</Typography>
+                        </MenuItem>
+                      </Link>
+                      <Link to={'/students'}>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography sx={{ textAlign: 'center' }}>Students</Typography>
+                        </MenuItem>
+                      </Link>
+                      <Link to={'/groups'}>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography sx={{ textAlign: 'center' }}>Groups</Typography>
+                        </MenuItem>
+                      </Link>
+                      <Link to={'/quizzes'}>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography sx={{ textAlign: 'center' }}>Quizzes</Typography>
+                        </MenuItem>
+                      </Link>
+                      <Link to={'/questions'}>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography sx={{ textAlign: 'center' }}>Questions</Typography>
+                        </MenuItem>
+                      </Link>
+                      <Link to={'/results'}>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography sx={{ textAlign: 'center' }}>Results</Typography>
+                        </MenuItem>
+                      </Link>
+                    </Menu>
+                </Box>
                 <Box sx={{ flexGrow: 1, display: 'flex', justifyContent:'center' }}>
                     <Tooltip title="Open settings">
                         <Box>

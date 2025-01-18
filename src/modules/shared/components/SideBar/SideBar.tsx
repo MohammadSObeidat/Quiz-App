@@ -1,20 +1,30 @@
 import './SideBar.css'
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import homeImg from '../../../../assets/images/Icon-home.png'
 import groupImg from '../../../../assets/images/Icon-group.png'
 import quizImg from '../../../../assets/images/Icon-quiz.png'
 import resultImg from '../../../../assets/images/Icon-result.png'
-import helpImg from '../../../../assets/images/Icon-help.png'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../../../../assets/images/Logo icon.png'
+
 
 export default function SideBar() {
   const [activeItem, setActiveItem] = useState('dashboard');  // Store the active item
   return (
-    <Box className="sidebar-container">
+    <Box className="sidebar-container" sx={{display: {lg: 'block', md: 'block', sm: 'block', xs: 'none'}}}>
         <Sidebar>
             <Menu>
+                <MenuItem icon={<MenuIcon sx={{fontSize:'40px'}}/>}> 
+                  <Typography
+                      variant="h6"
+                      noWrap
+                      >
+                      <img src={logo} alt="" />
+                  </Typography>
+                </MenuItem>
                 <MenuItem icon={<img src={homeImg} alt="" />}  component={<Link to="/dashboard" />}
                   active={activeItem === 'dashboard'}  // Conditional active state
                   onClick={() => setActiveItem('dashboard')}  // Set active item on click
@@ -39,7 +49,6 @@ export default function SideBar() {
                   active={activeItem === 'results'}  // Conditional active state
                   onClick={() => setActiveItem('results')}  // Set active item on click
                 > Results </MenuItem>
-                <MenuItem icon={<img src={helpImg} alt="" />}> Help </MenuItem>
             </Menu>
         </Sidebar>
     </Box>

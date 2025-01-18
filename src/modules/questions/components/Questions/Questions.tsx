@@ -281,7 +281,7 @@ export default function Questions() {
                     )}
                   </Grid>
                 ))}
-                <Grid size={4}>
+                <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                   <Box>
                     <Box className='name-question'>
                     <Typography className='title title-w'>Right Answer</Typography>
@@ -297,7 +297,7 @@ export default function Questions() {
                     {errors.answer && <p className='text-red-700'>{String(errors.answer.message)}</p>}
                   </Box>
                 </Grid>
-                <Grid size={4}>
+                <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                   <Box>
                     <Box className='name-question'>
                     <Typography className='title'>Difficulty</Typography>
@@ -312,7 +312,7 @@ export default function Questions() {
                     {errors.difficulty && <p className='text-red-700'>{String(errors.difficulty.message)}</p>}
                   </Box>
                 </Grid>
-                <Grid size={4}>
+                <Grid size={{lg: 4, md: 4, sm: 12, xs: 12}}>
                   <Box>
                     <Box className='name-question'>
                     <Typography className='title title-w'>Category type</Typography>
@@ -369,7 +369,7 @@ export default function Questions() {
                                         <StyledTableCell align="center">{question.description}</StyledTableCell>
                                         <StyledTableCell align="center">{question.difficulty}</StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <Box>
+                                            <Box sx={{display: {xs: 'flex'}}}>
                                                 <button title='Edit' onClick={() => handleClickOpen(question._id)}>
                                                     <BorderColorOutlinedIcon sx={{color: '#FB7C19'}}  className='mx-4'/>
                                                 </button>

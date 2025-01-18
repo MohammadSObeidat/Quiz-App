@@ -19,13 +19,13 @@ export default function MasterLayout() {
   }, [])
   
   return (
-    isAuth && <Box component="section">
-                <Box className="navbar">
-                  <Navbar/>
+    isAuth && <Box component="section" className='flex'>
+                <Box>
+                  <SideBar/>
                 </Box>
-                <Box className="container flex">
-                  <Box>
-                    <SideBar/>
+                <Box className="container">
+                  <Box className="navbar">
+                    <Navbar/>
                   </Box>
                   <Box className="bg-white w-full">
                     <Outlet/>

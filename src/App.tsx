@@ -19,6 +19,7 @@ import Results from './modules/results/components/Results/Results'
 import JoinQuiz from './modules/quizzes/components/JoinQuiz/JoinQuiz'
 import ProtectedRouteIsInstructor from './modules/shared/components/ProtectedRouteIsInstructor/ProtectedRouteIsInstructor'
 import StartQuiz from './modules/quizzes/components/StartQuiz/StartQuiz'
+import ProtectedRouteIsStudent from './modules/shared/components/ProtectedRouteIsStudent/ProtectedRouteIsStudent'
 
 function App() {
   const router = createBrowserRouter([
@@ -52,11 +53,15 @@ function App() {
     },
     {
       path: '/join-quiz',
-      element: <JoinQuiz/>
+      element:  <ProtectedRouteIsStudent>
+                  <JoinQuiz/>
+                </ProtectedRouteIsStudent> 
     },
     {
       path: '/start-quiz',
-      element: <StartQuiz/>
+      element:  <ProtectedRouteIsStudent>
+                  <StartQuiz/>
+                </ProtectedRouteIsStudent>
     }
   ])
 

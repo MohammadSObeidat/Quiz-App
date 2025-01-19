@@ -95,31 +95,35 @@ export default function Navbar() {
                     onClose={handleCloseNavMenu}
                     sx={{ display: { xs: 'block', md: 'none' } }}
                     >
+                      {!userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/dashboard'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Dashboard</Typography>
                         </MenuItem>
-                      </Link>
+                      </Link> }
+                      {!userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/students'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Students</Typography>
                         </MenuItem>
-                      </Link>
+                      </Link> }
+                      {!userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/groups'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Groups</Typography>
                         </MenuItem>
-                      </Link>
+                      </Link> }
                       <Link to={'/quizzes'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Quizzes</Typography>
                         </MenuItem>
                       </Link>
+                      {!userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/questions'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Questions</Typography>
                         </MenuItem>
-                      </Link>
+                      </Link> }
                       <Link to={'/results'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Results</Typography>

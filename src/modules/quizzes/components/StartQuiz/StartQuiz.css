@@ -1,0 +1,16 @@
+.cards-start-quiz .card-start-quiz {
+    border: 1px solid #000;
+    border-radius: 18px;
+}
+.btn-end-quiz {
+    background-color: #C5D86D;
+    border: 2px solid transparent;
+    outline: none;
+    padding: 10px 40px;
+    margin-top: 30px;
+    transition: 0.5s;
+}
+.btn-end-quiz:hover {
+    background-color: transparent;
+    border: 2px solid #C5D86D;
+}

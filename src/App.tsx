@@ -16,6 +16,9 @@ import Questions from './modules/questions/components/Questions/Questions'
 import Quizzes from './modules/quizzes/components/Quizzes/Quizzes'
 import QuizDetails from './modules/quizzes/components/QuizDetails/QuizDetails'
 import Results from './modules/results/components/Results/Results'
+import JoinQuiz from './modules/quizzes/components/JoinQuiz/JoinQuiz'
+import ProtectedRouteIsInstructor from './modules/shared/components/ProtectedRouteIsInstructor/ProtectedRouteIsInstructor'
+import StartQuiz from './modules/quizzes/components/StartQuiz/StartQuiz'
 
 function App() {
   const router = createBrowserRouter([
@@ -37,8 +40,8 @@ function App() {
                   <MasterLayout/> 
                 </ProtectedRoute>,
       children: [
-        {index: true, element: <Dashboard/>},
-        {path: 'dashboard', element: <Dashboard/>},
+        {index: true, element: <ProtectedRouteIsInstructor> <Dashboard/> </ProtectedRouteIsInstructor>},
+        {path: 'dashboard', element: <ProtectedRouteIsInstructor> <Dashboard/> </ProtectedRouteIsInstructor>},
         {path: 'groups', element: <Groups/>},
         {path: 'students', element: <Students/>},
         {path: 'questions', element: <Questions/>},
@@ -46,6 +49,14 @@ function App() {
         {path: 'quiz-details/:id', element: <QuizDetails/>},
         {path: 'results', element: <Results/>},
       ]
+    },
+    {
+      path: '/join-quiz',
+      element: <JoinQuiz/>
+    },
+    {
+      path: '/start-quiz',
+      element: <StartQuiz/>
     }
   ])
 

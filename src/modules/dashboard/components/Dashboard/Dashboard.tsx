@@ -8,6 +8,8 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { useQuizIncommingQuery, useTopFiveStudentQuery } from '../../../../redux/api/apiSlice';
 import { Link } from 'react-router-dom';
+import type { RootState } from '../../../../redux/store/store'
+import { useSelector } from 'react-redux'
 
 interface quizData {
   _id: string,
@@ -22,6 +24,8 @@ interface studentData {
 }
 
 export default function Dashboard() {
+  const userData = useSelector((state: RootState) => state.user.loginData)
+
   const {data: quizzes, isLoading: isLoadingQuiz} = useQuizIncommingQuery()
   const {data: students, isLoading: isLoadingStudent} = useTopFiveStudentQuery()
 
@@ -75,7 +79,7 @@ export default function Dashboard() {
               </Link>
             </Box>
             <Box className="cards flex flex-col gap-4">
-              {students.map((student: studentData) => {
+              {userData?.role !== 'Instructor' ? '' : students.map((student: studentData) => {
                 return  <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
                           <Box sx={{ borderRadius: '10px'}}>
                             <img style={{minWidth: '70px', maxWidth: '70px', minHeight: '70px', maxHeight: '70px'}} src={user} alt="" />

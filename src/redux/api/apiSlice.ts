@@ -20,9 +20,14 @@ export const apiSlice = createApi({
             query: () => ({
                 url: `/api/quiz/incomming`})
         }),
+        quizIncommingStudent: builder.query<any, void>({
+            query: () => ({
+                url: `/api/quiz/incomming`})
+        }),
         quizCompleted: builder.query<any, void>({
             query: () => ({
-                url: `/api/quiz/completed`})
+                url: `/api/quiz/completed`}),
+                providesTags: ['quiz']
         }),
         topFiveStudent: builder.query<any, void>({
             query: () => ({
@@ -65,6 +70,10 @@ export const apiSlice = createApi({
             query: (id) => ({
                 url: `/api/quiz/${id}`}),
         }),
+        questionsWithoutAnswers: builder.query<any, string | null>({
+            query: (id) => ({
+                url: `/api/quiz/without-answers/${id}`}),
+        }),
         getQuizResult: builder.query<any, void>({
             query: () => ({
                 url: `/api/quiz/result`}),
@@ -92,6 +101,14 @@ export const apiSlice = createApi({
                 body: data
             }),
             invalidatesTags: ['quiz']
+        }),
+        joinQuiz: builder.mutation({
+            query: (data) => ({
+                url: `/api/quiz/join`,
+                method: 'POST',
+                body: data
+            }),
+            // invalidatesTags: ['quiz']
         }),
         removeGroup: builder.mutation({
             query: (id) => ({
@@ -138,6 +155,13 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['quiz']
         }),
+        submitQuiz: builder.mutation({
+            query: ({id, data}) => ({
+                url: `/api/quiz/submit/${id}`,
+                method: 'POST',
+                body: data
+            }),
+        }),
     }),
 })
 
@@ -161,4 +185,8 @@ export const {useQuizIncommingQuery,
                 useRemoveQuizMutation,
                 useGetQuizQuery,
                 useUpdateQuizMutation,
-                useGetQuizResultQuery} = apiSlice
+                useGetQuizResultQuery,
+                useJoinQuizMutation,
+                useQuizIncommingStudentQuery,
+                useQuestionsWithoutAnswersQuery,
+                useSubmitQuizMutation} = apiSlice

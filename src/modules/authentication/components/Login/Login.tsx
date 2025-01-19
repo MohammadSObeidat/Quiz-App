@@ -51,7 +51,7 @@ export default function Login() {
       dispatch(setUserData(res?.data?.profile))
 
       toast.success(res?.message)
-      navigate('/dashboard')
+      navigate(res?.data?.profile?.role === 'Instructor' ? '/dashboard' : '/quizzes')
 
     } catch (error: any) {
       toast.error(error?.data?.message)      

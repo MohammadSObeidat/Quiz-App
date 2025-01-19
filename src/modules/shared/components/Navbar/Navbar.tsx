@@ -95,19 +95,19 @@ export default function Navbar() {
                     onClose={handleCloseNavMenu}
                     sx={{ display: { xs: 'block', md: 'none' } }}
                     >
-                      {!userData?.role !== 'Instructor' ? '' : 
+                      {userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/dashboard'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Dashboard</Typography>
                         </MenuItem>
                       </Link> }
-                      {!userData?.role !== 'Instructor' ? '' : 
+                      {userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/students'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Students</Typography>
                         </MenuItem>
                       </Link> }
-                      {!userData?.role !== 'Instructor' ? '' : 
+                      {userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/groups'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Groups</Typography>
@@ -118,7 +118,7 @@ export default function Navbar() {
                           <Typography sx={{ textAlign: 'center' }}>Quizzes</Typography>
                         </MenuItem>
                       </Link>
-                      {!userData?.role !== 'Instructor' ? '' : 
+                      {userData?.role !== 'Instructor' ? '' : 
                       <Link to={'/questions'}>
                         <MenuItem onClick={handleCloseNavMenu}>
                           <Typography sx={{ textAlign: 'center' }}>Questions</Typography>
